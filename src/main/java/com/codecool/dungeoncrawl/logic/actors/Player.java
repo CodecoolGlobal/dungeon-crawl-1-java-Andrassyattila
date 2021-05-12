@@ -3,12 +3,20 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.*;
+import javafx.scene.control.ListView;
+
+import java.util.ArrayList;
 
 public class Player extends Actor {
+    ArrayList<Item> inventory;
+    ListView<String> inventoryList;
     public Player(Cell cell) {
         super(cell);
-        setAttack(5);
+        setAttack(2);
         setHealth(5);
+        inventory=new ArrayList<>();
+        inventoryList= new ListView();
     }
 
     public String getTileName() {
@@ -18,14 +26,29 @@ public class Player extends Actor {
     @Override
     public void move(int dx, int dy) {
         Cell nextCell = getCell().getNeighbor(dx, dy);
+
         if (nextCell.getType() != CellType.WALL) {
-            /*if(nextCell.getItem() != null) {
-                .setOnAction(actionEvent ->  {
-                    //... do something in here.
-                });*/
+
+            if(nextCell.getActor() != null) {
+                if (fight(this, nextCell.getActor())) {
+                 nextCell.setActor(null);
+
+                }
+            }else if(nextCell.getItem()!=null){
+                inventory.add(nextCell.getItem());
+                inventoryList.getItems().add(nextCell.getItem().getTileName());
+                nextCell.setItem(null);
+            }
             super.move(dx, dy);
-        }else if(nextCell.getActor() instanceof Skeleton){
-            
         }
+    }
+
+    public ArrayList<Item> getInventory() {
+
+        return inventory;
+    }
+
+    public ListView<String> getInventoryList() {
+        return inventoryList;
     }
 }

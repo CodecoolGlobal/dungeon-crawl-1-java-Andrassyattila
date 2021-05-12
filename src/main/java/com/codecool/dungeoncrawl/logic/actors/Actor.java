@@ -49,4 +49,17 @@ public abstract class Actor implements Drawable {
     public void setHealth(int health) {
         this.health = health;
     }
+    public boolean fight(Player player, Actor monster){
+        while(player.getHealth() >= 1 && monster.getHealth()>=1){
+            monster.setHealth(monster.getHealth()-player.getAttack());
+            player.setHealth(player.getHealth()- monster.getAttack());
+
+        }
+        if(monster.getHealth()<=0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }
