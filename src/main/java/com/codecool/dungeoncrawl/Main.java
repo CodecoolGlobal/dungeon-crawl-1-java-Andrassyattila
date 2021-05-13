@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    static GameMap map = MapLoader.loadMap("/map.txt");
 
     Button pickUpButton = new Button("Pick up");
     Canvas canvas = new Canvas(
@@ -101,5 +101,9 @@ public class Main extends Application {
     }
     public void setButton(){
         pickUpButton.setDisable(!pickUpButton.isDisable());
+    }
+
+    public static void setMap(GameMap map){
+        Main.map = map;
     }
 }

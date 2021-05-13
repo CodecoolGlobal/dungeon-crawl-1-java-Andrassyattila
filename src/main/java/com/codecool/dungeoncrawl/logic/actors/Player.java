@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.*;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.*;
 import javafx.scene.control.ListView;
@@ -28,6 +27,10 @@ public class Player extends Actor {
         Cell nextCell = getCell().getNeighbor(dx, dy);
 
         if (nextCell.getType() != CellType.WALL) {
+            if(nextCell.getType() == CellType.DOOR) {
+                GameMap map2 = MapLoader.loadMap("/map2.txt");
+                Main.setMap(map2);
+            }
 
             if(nextCell.getActor() != null) {
                 if (fight(this, nextCell.getActor())) {
